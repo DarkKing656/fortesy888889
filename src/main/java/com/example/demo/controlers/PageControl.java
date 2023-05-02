@@ -5,6 +5,7 @@ import com.example.demo.model.Cheaken;
 import com.example.demo.model.CheakenHouse;
 import com.example.demo.repositorii.CheakenHouseRep;
 //import com.example.demo.repositorii.ChickenRep;
+import com.example.demo.service.CheakenHouseService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,14 +22,17 @@ import java.util.Optional;
 @Controller
 @Api(description ="Контролер для всех страниц 'Курятников'")
 public class PageControl {
+    private CheakenHouseService cheakenHouseService;
     @Autowired
     private com.example.demo.repositorii.CheakenHouseRep CheakenHouseRep;
+    public PageControl(CheakenHouseService cheakenHouseService){
+        super();
+        this.cheakenHouseService=cheakenHouseService;
+    }
     @GetMapping("/gcheak")
     @ApiOperation("Контолер для отображение Страницы 'Курятник' c использованием базы данных ")
-    public String home(Model model) {
-
-    Iterable<CheakenHouse> CheakenHouseNum= CheakenHouseRep.findAll();
-    model.addAttribute("CheakenHo",CheakenHouseNum);
+    public String listCheakenHouses(Model model) {
+        model.addAttribute("CheakenHo",cheakenHouseService.getAllChikenHouses());
         return "cheakenhouse";
     }
     @GetMapping("/gcheak/add")
