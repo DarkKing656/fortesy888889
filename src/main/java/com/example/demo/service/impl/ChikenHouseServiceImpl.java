@@ -22,4 +22,20 @@ public class ChikenHouseServiceImpl implements CheakenHouseService {
         super();
         this.cheakenHouseRep = cheakenHouseRep;
     }
+    @Override
+    public  CheakenHouse saveCH(CheakenHouse cheakenHouse){
+        return cheakenHouseRep.save(cheakenHouse);
+    }
+    @Override
+    public CheakenHouse getChikenHouseById(Long id){
+        return cheakenHouseRep.findById(id).get();
+    }
+    @Override
+    public CheakenHouse updateChikenHouse(CheakenHouse cheakenHouse){
+        return cheakenHouseRep.save(cheakenHouse);
+    }
+    @Override
+    public void deleteChikenHouseById(Long id){
+        cheakenHouseRep.deleteById(id);
+    }
 }

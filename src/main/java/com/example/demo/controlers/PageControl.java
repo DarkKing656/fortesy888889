@@ -5,16 +5,15 @@ import com.example.demo.model.Cheaken;
 import com.example.demo.model.CheakenHouse;
 import com.example.demo.repositorii.CheakenHouseRep;
 //import com.example.demo.repositorii.ChickenRep;
+import com.example.demo.repositorii.ChickenRep;
 import com.example.demo.service.CheakenHouseService;
+import com.example.demo.service.ChickenService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.Optional;
@@ -23,8 +22,10 @@ import java.util.Optional;
 @Api(description ="Контролер для всех страниц 'Курятников'")
 public class PageControl {
     private CheakenHouseService cheakenHouseService;
+    private ChickenService chickenService;
     @Autowired
     private com.example.demo.repositorii.CheakenHouseRep CheakenHouseRep;
+    private com.example.demo.repositorii.ChickenRep ChickenRep;
     public PageControl(CheakenHouseService cheakenHouseService){
         super();
         this.cheakenHouseService=cheakenHouseService;
@@ -38,13 +39,15 @@ public class PageControl {
     @GetMapping("/gcheak/add")
     @ApiOperation("Контролер для отобрадение страницы 'Добавления Курятника'")
     public String chekadd(Model model) {
+        CheakenHouse cheakenhouse = new CheakenHouse();
+        model.addAttribute("cheakenhouse",cheakenhouse);
         return "cheakenhouseadd";
     }
     @PostMapping("/gcheak/add")
     @ApiOperation("Контролер для считывание инфы со страницы 'Добавления Курятника'")
-    public String chekrepadd(@RequestParam String name, Model model) {
-        CheakenHouse cheakenHouse = new CheakenHouse(name);
-        CheakenHouseRep.save(cheakenHouse);
+    public String chekrepadd(@ModelAttribute("cheakenhouse") CheakenHouse cheakenHouse) {
+
+        cheakenHouseService.saveCH(cheakenHouse);
         return "redirect:/";
     }
     @GetMapping("/gcheak/{id}")
@@ -53,10 +56,9 @@ public class PageControl {
         if(!CheakenHouseRep.existsById(id)){
             return "redirect:/";
         }
-        Optional<CheakenHouse> cheakenHouse=CheakenHouseRep.findById(id);
-        ArrayList<CheakenHouse> res= new ArrayList<>();
-        cheakenHouse.ifPresent(res :: add);
-        model.addAttribute("cheakenHouse", res);
+
+
+        model.addAttribute("cheakenHouse", cheakenHouseService.getChikenHouseById(id));
         return "cheakenhouse-details";
     }
     @GetMapping("/gcheak/{id}/edit")
@@ -65,25 +67,23 @@ public class PageControl {
         if(!CheakenHouseRep.existsById(id)){
             return "redirect:/";
         }
-        Optional<CheakenHouse> cheakenHouse=CheakenHouseRep.findById(id);
-        ArrayList<CheakenHouse> res= new ArrayList<>();
-        cheakenHouse.ifPresent(res :: add);
-        model.addAttribute("cheakenHouse", res);
+
+        model.addAttribute("cheakenHouse", cheakenHouseService.getChikenHouseById(id));
         return "cheakenhouse-edit";
     }
     @PostMapping("/gcheak/{id}/edit")
     @ApiOperation("Контролер для  считывания инфы со страницы изменения информации внутри строчки БД")
-    public String chekedupdate(@RequestParam String name,@PathVariable(value="id")long id, Model model) {
-       CheakenHouse cheakrt=CheakenHouseRep.findById(id).orElseThrow();
-       cheakrt.setName(name);
-       CheakenHouseRep.save(cheakrt);
+    public String chekedupdate(@ModelAttribute("student") CheakenHouse cheakenHouse,@PathVariable(value="id")long id, Model model) {
+       CheakenHouse existingCH=cheakenHouseService.getChikenHouseById(id);
+       existingCH.setId(id);
+       existingCH.setName(cheakenHouse.getName());
+       cheakenHouseService.updateChikenHouse(existingCH);
         return "redirect:/";
     }
     @PostMapping("/gcheak/{id}/remove")
     @ApiOperation("Контролер для удаления строчки из БД")
     public String chekeremove(@PathVariable(value="id")long id, Model model) {
-        CheakenHouse cheakrt=CheakenHouseRep.findById(id).orElseThrow();
-        CheakenHouseRep.delete(cheakrt);
+        cheakenHouseService.deleteChikenHouseById(id);
         return "redirect:/";
     }
 
