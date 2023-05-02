@@ -12,6 +12,11 @@ import java.util.List;
 @Service
 public class ChikenServiceImpl implements ChickenService {
     private ChickenRep chickenRep;
+
+    public ChikenServiceImpl(ChickenRep chickenRep) {
+        this.chickenRep = chickenRep;
+    }
+
     @Override
     public List<Cheaken> getAllChikens(){
         Iterable<Cheaken>irc=chickenRep.findAll();

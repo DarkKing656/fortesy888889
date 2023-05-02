@@ -9,10 +9,18 @@ import jakarta.persistence.Id;
 public class Cheaken {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long C_id;
+    private Long id;
     private Long idofcheakhouse;
-    private String Cname;
+    private String name;
     private int age;
+
+    public Long getC_id() {
+        return id;
+    }
+
+    public void setC_id(Long c_id) {
+        id = c_id;
+    }
 
     public Cheaken() {
     }
@@ -20,7 +28,7 @@ public class Cheaken {
     public Cheaken(int age,Long idofcheakhouse,String name){
         this.age=age;
         this.idofcheakhouse=idofcheakhouse;
-        this.Cname=name;
+        this.name=name;
     }
 
     public Long getIdofcheakhouse() {
@@ -32,11 +40,11 @@ public class Cheaken {
     }
 
     public String getName() {
-        return Cname;
+        return name;
     }
 
     public void setName(String name) {
-        this.Cname = name;
+        this.name = name;
     }
 
     public Integer getAge() {

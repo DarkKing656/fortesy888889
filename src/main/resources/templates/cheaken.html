@@ -20,7 +20,11 @@
 </div>
 <div>
   <h1> Учет куриц</h1>
-
+  <div th:each="el : ${Cheaken}" class="alert alert-info mt-2">
+    <p>Имя: </p> <h3 th:text="${el.name}"></h3>
+    <p>Id Курятника: </p><h4 th:text="${el.idofcheakhouse}"> Id Курятника: </h4>
+    <a th:href="'/gcheak/'+${el.idofcheakhouse}+'/'+${el.c_id}" class="btn btn-warning">Детальнее</a>
+  </div>
   </div>
 </div>
 
