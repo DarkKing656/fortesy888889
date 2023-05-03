@@ -11,4 +11,5 @@ public interface ChickenService {
     Cheaken getChikenById(Long id);
     Cheaken updateChiken(Cheaken cheaken);
     void deleteChikenById(Long id);
+
 }

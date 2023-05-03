@@ -33,6 +33,7 @@ public class ChikenServiceImpl implements ChickenService {
     public Cheaken getChikenById(Long id){
         return chickenRep.findById(id).get();
     }
+
     @Override
     public Cheaken updateChiken(Cheaken cheaken){
         return chickenRep.save(cheaken);

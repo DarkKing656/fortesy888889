@@ -14,8 +14,16 @@ public class Cheaken {
     private String name;
     private int age;
 
-    public Long getC_id() {
+    public Long getid() {
         return id;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public void setC_id(Long c_id) {

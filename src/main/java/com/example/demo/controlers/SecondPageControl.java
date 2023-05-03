@@ -9,10 +9,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @Api(description ="Контролер для всех страниц 'Куриц'")
@@ -44,6 +41,17 @@ public class SecondPageControl {
 
         chickenService.saveC(cheaken);
         return "redirect:/";
+    }
+
+    @GetMapping("/gpagecheak/{idofcheakhouse}/{id}")
+    @ApiOperation("Контролер для отображения динамической стриницы для каждого курятника")
+    public String cheksdetails(@PathVariable(value = "id") long id, @PathVariable(value = "idofcheakhouse") long idofcheakhouse, Model model) {
+        if (!ChickenRep.existsById(id)) {
+            return "redirect:/";
+        }
+        model.addAttribute("cheaken", chickenService.getChikenById(id));
+        model.addAttribute("idofcheakhouse", idofcheakhouse);
+        return "chiken-details";
     }
 
     }
