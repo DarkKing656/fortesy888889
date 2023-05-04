@@ -78,6 +78,12 @@ public class SecondPageControl {
         chickenService.updateChiken(existingC);
         return "redirect:/";
     }
+    @PostMapping("/gpagecheak/{idofcheakhouse}/{id}/remove")
+    @ApiOperation("Контролер для удаления строчки из БД")
+    public String chekenremove(@PathVariable(value="id")long id,@PathVariable(value = "idofcheakhouse") long idofcheakhouse, Model model) {
+        chickenService.deleteChikenById(id);
+        return "redirect:/";
+    }
     }
 
 
