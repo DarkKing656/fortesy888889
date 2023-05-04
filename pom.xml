@@ -66,6 +66,12 @@
 			<artifactId>springfox-swagger-ui</artifactId>
 			<version>3.0.0</version>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.webjars/vue -->
+		<dependency>
+			<groupId>org.webjars</groupId>
+			<artifactId>vue</artifactId>
+			<version>2.6.14</version>
+		</dependency>
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
