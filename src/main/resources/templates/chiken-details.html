@@ -21,18 +21,24 @@
 </div>
 <div>
     <h1> </h1>
-    <div th:each="el : ${cheaken}" class="alert alert-info mt-2">
-        <p>Имя: </p> <h3 th:text="${el.name}"></h3>
-        <p>Id: </p><h4 th:text="${el.id}"> Id: </h4>
-        <p>Id курятника :</p><h4 th:text="${el.idofcheakenhouse}">Id курятника :</h4>
-        <p>Возраст курицы :</p><h4 th:text="${el.age}">Возраст курицы :</h4>
 
-        <a th:href="'/gpagecheak/'+${el.idofcheakenhouse}+'/'+${el.id}+'/edit'" class="btn btn-warning">Редактировать</a>
-        <form th:action="'/gpagecheak/'+${el.idofcheakenhouse}+'/'+${el.id}+'/remove'" method="post">
+    <div th:each="ml: ${idch}" class="alert alert-info mt-2">
+        <div th:each="el : ${cheaken}" class="alert alert-info mt-2" >
+            <p>Имя: </p> <h3 th:text="${el.name}"></h3>
+            <p>Id: </p><h4 th:text="${el.id}"> Id: </h4>
+            <p> Id курятника: </p><h4 th:text="${ml}">Id курятника:</h4>
+            <p>Возраст курицы :</p><h4 th:text="${el.age}">Возраст курицы :</h4>
+
+
+            <a th:href="'/gpagecheak/'+${ml}+'/'+${el.id}+'/edit'" class="btn btn-warning">Редактировать</a>
+            <form th:action="'/gpagecheak/'+${ml}+'/'+${el.id}+'/remove'" method="post">
             <button class="btn btn-warning" type="submit">Удалить</button>
-        </form>
-
+            </form>
+        </div>
     </div>
+    </form>
+
+</div>
 </div>
 
 </body>

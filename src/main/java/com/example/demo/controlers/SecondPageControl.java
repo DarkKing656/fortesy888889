@@ -49,8 +49,10 @@ public class SecondPageControl {
         if (!ChickenRep.existsById(id)) {
             return "redirect:/";
         }
-        model.addAttribute("cheaken", chickenService.getChikenById(id));
-        model.addAttribute("idofcheakhouse", idofcheakhouse);
+        var md=chickenService.getChikenById(id);
+        model.addAttribute("cheaken", md);
+        var gh=idofcheakhouse;
+        model.addAttribute("idch", gh);
         return "chiken-details";
     }
 
