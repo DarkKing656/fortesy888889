@@ -55,7 +55,35 @@ public class SecondPageControl {
         model.addAttribute("idch", gh);
         return "chiken-details";
     }
-
+    @GetMapping("/gpagecheak/{idofcheakhouse}/{id}/edit")
+    @ApiOperation("Контролер для отображения страницы изменения информации внутри строчки БД")
+    public String chekenedit(@PathVariable(value = "id") long id, @PathVariable(value = "idofcheakhouse") long idofcheakhouse, Model model) {
+        if (!ChickenRep.existsById(id)) {
+            return "redirect:/";
+        }
+        var md=chickenService.getChikenById(id);
+        model.addAttribute("cheaken", md);
+        var gh=idofcheakhouse;
+        model.addAttribute("idch", gh);
+        return "chiken-edit";
+    }
+    @PostMapping("/gpagecheak/{idofcheakhouse}/{id}/edit")
+    @ApiOperation("Контролер для считывания инфы со страницы изменения информации внутри строчки БД")
+    public String chekensdupdate(@ModelAttribute("cheaken") Cheaken cheaken,@PathVariable(value="id")long id,@PathVariable(value = "idofcheakhouse") long idofcheakhouse, Model model) {
+        Cheaken existingC=chickenService.getChikenById(id);
+        existingC.setId(id);
+        existingC.setName(cheaken.getName());
+        existingC.setAge(cheaken.getAge());
+        existingC.setIdofcheakhouse(cheaken.getIdofcheakhouse());
+        chickenService.updateChiken(existingC);
+        return "redirect:/";
+    }
+    @PostMapping("/gpagecheak/{idofcheakhouse}/{id}/remove")
+    @ApiOperation("Контролер для удаления строчки из БД")
+    public String chekenremove(@PathVariable(value="id")long id,@PathVariable(value = "idofcheakhouse") long idofcheakhouse, Model model) {
+        chickenService.deleteChikenById(id);
+        return "redirect:/";
+    }
     }
 
 
